@@ -20,7 +20,7 @@ function Board({ xIsNext, squares, onPlay } : { xIsNext: boolean, squares: strin
     } else {
       nextSquares[i] = 'O';
     }
-    onPlay(nextSquares);
+    onPlay(nextSquares, i);
   }
 
   const winner = calculateWinner(squares);
@@ -60,15 +60,16 @@ function Board({ xIsNext, squares, onPlay } : { xIsNext: boolean, squares: strin
 }
 
 export default function Game() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [history, setHistory] = useState([{board: Array(9).fill(null), location: Array(2).fill(null)}]);
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
-  const currentSquares = history[currentMove];
+  const currentSquares = history[currentMove].board;
 
   const [sortAscending, setSortAscending] = useState(true);
 
-  function handlePlay(nextSquares: string[]) {
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+  function handlePlay(nextSquares: string[], i: number) {
+    const nextLocation = [Math.floor(i / 3) + 1, (i % 3) + 1];
+    const nextHistory = [...history.slice(0, currentMove + 1), {board: nextSquares, location: nextLocation}];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
@@ -77,10 +78,11 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
-  const moves = history.map((_squares, move) => {
+  const moves = history.map((squares, move) => {
+    const location = `(row: ${squares.location[0]}, col: ${squares.location[1]})`;
     let description;
     if (move > 0) {
-      description = 'Go to move #' + move;
+      description = `Go to move #${move} ${location}`
     } else {
       description = 'Go to game start';
     }
@@ -88,7 +90,7 @@ export default function Game() {
       <li key={move}>
         {
           move === history.length - 1
-          ? <>You are at move #{move}</>
+          ? <>You are at move #{move} {move > 0 ? location : ''}</>
           : <button onClick={() => jumpTo(move)}>{description}</button>
         }
       </li>
