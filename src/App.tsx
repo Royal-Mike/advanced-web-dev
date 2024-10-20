@@ -5,15 +5,13 @@ import NotFound from './pages/NotFound/app';
 
 import IA01 from './pages/IA01/app';
 
-const base = '/advanced-web-dev';
-
 export default function App() {
   return (
     <div>
       <Routes>
-        <Route path={`${base}/`} element={<Home />} />
-        <Route path={`${base}/tic-tac-toe`} element={<IA01 />} />
-        <Route path={`${base}/*`} element={<NotFound />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/tic-tac-toe' element={<IA01 />} />
+        <Route path='/*' element={<NotFound />} />
       </Routes>
     </div>
   );
