@@ -4,13 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 
-interface Photo {
-	id: string;
-	alt_description: string | undefined;
-	urls: {
-		small: string;
-	};
-}
+import Photo from '../interface/Photo';
 
 const PhotoGallery: React.FC = () => {
   const [photos, setPhotos] = useState<Photo[]>([]);

@@ -3,8 +3,8 @@ import './app.css';
 import { ClipLoader } from 'react-spinners';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
-const PhotoGallery = React.lazy(() => import('./PhotoGallery'));
-const PhotoDetail = React.lazy(() => import('./PhotoDetail'));
+const PhotoGallery = React.lazy(() => import('./components/PhotoGallery'));
+const PhotoDetail = React.lazy(() => import('./components/PhotoDetail'));
 
 export default function Gallery() {
   return (
