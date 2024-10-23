@@ -2,14 +2,14 @@ import React, { Suspense } from 'react';
 import './app.css';
 import { ClipLoader } from 'react-spinners';
 import { Outlet, Route, Routes } from 'react-router-dom';
+import Layout from './components/Layout';
 
 const PhotoGallery = React.lazy(() => import('./components/PhotoGallery'));
 const PhotoDetail = React.lazy(() => import('./components/PhotoDetail'));
 
 export default function Gallery() {
   return (
-    <div className="gallery">
-      <h1 className="text-4xl font-bold text-center mt-4">Unsplash Photo Gallery</h1>
+    <Layout>
       <Suspense
         fallback={
           <div className="flex justify-center items-center h-screen">
@@ -23,6 +23,6 @@ export default function Gallery() {
         </Routes>
         <Outlet />
       </Suspense>
-    </div>
+    </Layout>
   );
 }
