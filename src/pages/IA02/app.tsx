@@ -1,8 +1,10 @@
 import React, { Suspense } from 'react';
 import './app.css';
 import { ClipLoader } from 'react-spinners';
+import { Outlet, Route, Routes } from 'react-router-dom';
 
 const PhotoGallery = React.lazy(() => import('./PhotoGallery'));
+const PhotoDetail = React.lazy(() => import('./PhotoDetail'));
 
 export default function Gallery() {
   return (
@@ -15,7 +17,11 @@ export default function Gallery() {
           </div>
         }
       >
-        <PhotoGallery />
+        <Routes>
+          <Route path="/" element={<PhotoGallery />} />
+          <Route path="/photos/:id" element={<PhotoDetail />} />
+        </Routes>
+        <Outlet />
       </Suspense>
     </div>
   );

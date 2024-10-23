@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 
 interface Photo {
@@ -87,13 +88,15 @@ const PhotoGallery: React.FC = () => {
         {/* Photo gallery */}
         <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
           {photos.map((photo) => (
-            <div key={photo.id} className="break-inside-avoid overflow-hidden rounded-lg shadow-lg">
-              <img
-                src={photo.urls.small}
-                alt={photo.alt_description || 'Unsplash Image'}
-                className="w-full h-auto object-cover"
-              />
-            </div>
+							<div key={photo.id} className="break-inside-avoid overflow-hidden rounded-lg shadow-lg">
+								<Link key={photo.id} to={`./photos/${photo.id}`}>
+									<img
+										src={photo.urls.small}
+										alt={photo.alt_description || 'Unsplash Image'}
+										className="w-full h-auto object-cover"
+									/>
+								</Link>
+							</div>
           ))}
         </div>
       </InfiniteScroll>

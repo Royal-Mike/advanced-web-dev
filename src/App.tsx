@@ -12,7 +12,7 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/tic-tac-toe' element={<IA01 />} />
-        <Route path='/unsplash-gallery' element={<IA02 />} />
+        <Route path='/unsplash-gallery/*' element={<IA02 />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </div>
