@@ -20,7 +20,7 @@ const PhotoGallery = () => {
             per_page: 30,
           },
           headers: {
-            Authorization: `Client-ID 4bF5uhcKZZfwiRZ5JAjddaclORcoFOSwCPiKcngiK_k`,
+            Authorization: `Client-ID ${import.meta.env.VITE_REACT_APP_UNSPLASH_ACCESS_KEY}`,
           },
         });
         setPhotos(response.data);
@@ -34,7 +34,7 @@ const PhotoGallery = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
         {photos.map((photo) => (
           <div key={photo.id} className="overflow-hidden rounded-lg shadow-lg">
             <img
