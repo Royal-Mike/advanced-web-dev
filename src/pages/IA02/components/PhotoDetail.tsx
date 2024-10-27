@@ -10,6 +10,7 @@ const PhotoDetail: React.FC = () => {
   const [photo, setPhoto] = useState<PhotoDetailData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // Fetch photo details from Unsplash API
   useEffect(() => {
     const fetchPhotoDetails = async () => {
       try {
@@ -36,9 +37,9 @@ const PhotoDetail: React.FC = () => {
 
   if (!photo) {
     return (
-        <div className="flex justify-center items-center h-screen">
-            <ClipLoader size={50} color={"#123abc"} loading={true} />
-        </div>
+      <div className="flex justify-center items-center h-screen">
+        <ClipLoader size={50} color={"#123abc"} loading={true} />
+      </div>
     );
   }
 
