@@ -4,4 +4,7 @@ export default interface Photo {
 	urls: {
 		small: string;
 	};
+	user: {
+		name: string;
+	};
 }

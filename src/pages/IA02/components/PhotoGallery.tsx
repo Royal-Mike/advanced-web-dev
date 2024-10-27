@@ -89,6 +89,9 @@ const PhotoGallery: React.FC = () => {
 										alt={photo.alt_description || 'Unsplash Image'}
 										className="w-full h-auto object-cover"
 									/>
+                  <div className="p-2">
+                    <p className="text-sm text-gray-700">{photo.user.name}</p>
+                  </div>
 								</Link>
 							</div>
           ))}
