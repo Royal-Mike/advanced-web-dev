@@ -3,17 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
 
-interface PhotoDetailData {
-  id: string;
-  urls: {
-    regular: string;
-  };
-  alt_description: string | null;
-  user: {
-    name: string;
-  };
-  description: string | null;
-}
+import PhotoDetailData from '../interface/PhotoDetailData';
 
 const PhotoDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Get the photo ID from the URL
