@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import UserLogin from '../interface/UserLogin';
 
-const API = import.meta.env.VITE_REACT_APP_API_LOCAL;
+const API = import.meta.env.VITE_REACT_APP_API;
 
 function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm<UserLogin>();

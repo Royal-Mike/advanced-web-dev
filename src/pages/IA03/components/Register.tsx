@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import UserRegister from '../interface/UserRegister';
 
-const API = import.meta.env.VITE_REACT_APP_API_LOCAL;
+const API = import.meta.env.VITE_REACT_APP_API;
 
 function Register() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<UserRegister>();
