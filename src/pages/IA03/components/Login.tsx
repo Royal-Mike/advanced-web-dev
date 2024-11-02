@@ -74,13 +74,6 @@ function Login() {
 					{errors.password ? <p className="pt-2 text-red-600">{errors.password.message}</p>
 					: errorPassword && <p className="pt-2 text-red-600">{errorPassword}</p>}
 
-					<div className="mt-4 flex items-center justify-between">
-						<label className="flex items-center gap-2">
-							<input type="checkbox" {...register('remember')}
-								className="bg-transparent border-none text-transparent focus:ring-0 focus:ring-offset-0" />
-							<span className="text-xs">Remember me</span>
-						</label>
-					</div>
 					<div className="mt-4 flex items-center justify-end gap-x-2">
 						{fetching
 						? <ClipLoader size={30} color={"white"} loading={true} />
