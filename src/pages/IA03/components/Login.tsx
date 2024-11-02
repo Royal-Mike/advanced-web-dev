@@ -63,6 +63,7 @@ function Login() {
 					</div>
 					{errors.username ? <p className="pt-2 text-red-600">{errors.username.message}</p>
 					: errorUsername && <p className="pt-2 text-red-600">{errorUsername}</p>}
+
 					<div className="mt-4 group relative rounded-lg border focus-within:border-sky-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
 						<div className="flex justify-between">
 							<label className="text-xs font-medium text-muted-foreground group-focus-within:text-white text-gray-400">Password</label>
@@ -72,6 +73,7 @@ function Login() {
 					</div>
 					{errors.password ? <p className="pt-2 text-red-600">{errors.password.message}</p>
 					: errorPassword && <p className="pt-2 text-red-600">{errorPassword}</p>}
+
 					<div className="mt-4 flex items-center justify-between">
 						<label className="flex items-center gap-2">
 							<input type="checkbox" {...register('remember')}
