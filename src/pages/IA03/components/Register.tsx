@@ -1,30 +1,50 @@
-import React from 'react';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import UserLogin from '../interface/UserLogin';
+import { useNavigate } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
+import UserRegister from '../interface/UserRegister';
+
+const API = import.meta.env.VITE_REACT_APP_API_LOCAL;
 
 function Register() {
-  const { register, handleSubmit, formState: { errors } } = useForm<UserLogin>();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<UserRegister>();
+	const [errorUsername, setErrorUsername] = useState('');
+	const [errorEmail, setErrorEmail] = useState('');
+	const [errorPassword, setErrorPassword] = useState('');
+	const [fetching, setFetching] = useState(false);
+	const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<UserLogin> = async data => {
+  const onSubmit: SubmitHandler<UserRegister> = async data => {
+		setFetching(true);
+		setErrorUsername('');
+		setErrorEmail('');
+		setErrorPassword('');
+
     try {
-			console.log("ha");
-      const response = await fetch('https://advanced-web-nest-b24630e02d7a.herokuapp.com/user/login', {
+      const response = await fetch(`${API}/user/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // Allows cookies to be sent with the request
         body: JSON.stringify(data),
       });
-			console.log("hey");
+
       if (response.ok) {
-        const result = await response.json();
-        console.log(result.access_token);
-        // Optionally handle successful login (e.g., redirect, display message)
+        navigate('../login');
       }
       else {
-				console.log("hi");
 				const errorData = await response.json();
-				console.error(errorData.message);
+				const message = errorData.message;
+				if (message.toLowerCase().includes('username')) {
+					setErrorUsername(message);
+				}
+				else if (message.toLowerCase().includes('email')) {
+					setErrorEmail(message);
+				}
+				else {
+					setErrorPassword(message);
+				}
       }
+
+			setFetching(false);
     } catch (error) {
       console.error('An error occurred: ', error);
     }
@@ -45,7 +65,19 @@ function Register() {
 						<input type="text" autoComplete="off" {...register('username', { required: 'Username is required' })}
 							className="block w-full border-0 bg-transparent p-0 text-sm file:my-1 file:rounded-full file:border-0 file:bg-accent file:px-4 file:py-2 file:font-medium placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground" />
 					</div>
-					{errors.username && <p className="pt-2 text-red-600">{errors.username.message}</p>}
+					{errors.username ? <p className="pt-2 text-red-600">{errors.username.message}</p>
+					: errorUsername && <p className="pt-2 text-red-600">{errorUsername}</p>}
+
+					<div className="mt-4 group relative rounded-lg border focus-within:border-sky-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
+						<div className="flex justify-between">
+							<label className="text-xs font-medium text-muted-foreground group-focus-within:text-white text-gray-400">Email</label>
+						</div>
+						<input type="email" autoComplete="off" {...register('email', { required: 'Email is required' })}
+							className="block w-full border-0 bg-transparent p-0 text-sm file:my-1 file:rounded-full file:border-0 file:bg-accent file:px-4 file:py-2 file:font-medium placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground" />
+					</div>
+					{errors.email ? <p className="pt-2 text-red-600">{errors.email.message}</p>
+					: errorEmail && <p className="pt-2 text-red-600">{errorEmail}</p>}
+
 					<div className="mt-4 group relative rounded-lg border focus-within:border-sky-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
 						<div className="flex justify-between">
 							<label className="text-xs font-medium text-muted-foreground group-focus-within:text-white text-gray-400">Password</label>
@@ -53,20 +85,34 @@ function Register() {
 						<input type="password" {...register('password', { required: 'Password is required' })}
 							className="block w-full border-0 bg-transparent p-0 text-sm file:my-1 placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 focus:ring-teal-500 sm:leading-7 text-foreground" />
 					</div>
-					{errors.password && <p className="pt-2 text-red-600">{errors.password.message}</p>}
-					<div className="mt-4 flex items-center justify-between">
-						<label className="flex items-center gap-2">
-							<input type="checkbox" {...register('remember')}
-								className="bg-transparent border-none text-transparent focus:ring-0 focus:ring-offset-0" />
-							<span className="text-xs">Remember me</span>
-						</label>
+					{errors.password ? <p className="pt-2 text-red-600">{errors.password.message}</p>
+					: errorPassword && <p className="pt-2 text-red-600">{errorPassword}</p>}
+
+					<div className="mt-4 group relative rounded-lg border focus-within:border-sky-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
+						<div className="flex justify-between">
+							<label className="text-xs font-medium text-muted-foreground group-focus-within:text-white text-gray-400">Confirm Password</label>
+						</div>
+						<input type="password" {...register('cpassword', { required: 'Please confirm password',
+						validate: (value: string) => {
+							if (watch('password') !== value) {
+								return "Your passwords do not match";
+							}
+						}})}
+							className="block w-full border-0 bg-transparent p-0 text-sm file:my-1 placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 focus:ring-teal-500 sm:leading-7 text-foreground" />
 					</div>
+					{errors.cpassword && <p className="pt-2 text-red-600">{errors.cpassword.message}</p>}
+
 					<div className="mt-4 flex items-center justify-end gap-x-2">
-						<a className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:ring hover:ring-white h-10 px-4 py-2 duration-200"
-							href="./login">Log in</a>
-						<button
-							className="font-semibold hover:bg-black hover:text-white hover:ring hover:ring-white transition duration-300 inline-flex items-center justify-center rounded-md text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-black h-10 px-4 py-2"
-							type="submit">Register</button>
+						{fetching
+						? <ClipLoader size={30} color={"white"} loading={true} />
+						: <>
+								<a className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:ring hover:ring-white h-10 px-4 py-2 duration-200"
+									href="./login">Log in</a>
+								<button
+									className="font-semibold hover:bg-black hover:text-white hover:ring hover:ring-white transition duration-300 inline-flex items-center justify-center rounded-md text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-black h-10 px-4 py-2"
+									type="submit">Register</button>
+							</>
+						}
 					</div>
 				</form>
 			</div>
