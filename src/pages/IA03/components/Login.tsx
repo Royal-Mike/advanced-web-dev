@@ -11,7 +11,7 @@ function Login() {
 	const [errorUsername, setErrorUsername] = useState('');
 	const [errorPassword, setErrorPassword] = useState('');
 	const [fetching, setFetching] = useState(false);
-	const navigate = useNavigate(); 
+	const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<UserLogin> = async data => {
 		setFetching(true);

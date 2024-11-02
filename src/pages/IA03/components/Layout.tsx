@@ -1,11 +1,33 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+const API = import.meta.env.VITE_REACT_APP_API_LOCAL;
 
 interface Props {
   children: React.ReactNode;
 }
 
 const Layout: React.FC<Props> = ({ children }) => {
+  const navigate = useNavigate();
+
+  async function logout() {
+    try {
+      const response = await fetch(`${API}/user/logout`, {
+        method: 'POST',
+        credentials: 'include', // Allows cookies to be sent with the request
+      });
+
+      if (response.ok) {
+        navigate('./login');
+      }
+      else {
+				console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('An error occurred: ', error);
+    }
+  }
+
   return (
     <div className="bg-black min-h-screen flex flex-col">
       {/* Header */}
@@ -15,12 +37,9 @@ const Layout: React.FC<Props> = ({ children }) => {
             <Link to="./">21127561 - User Registration</Link>
           </h1>
           <nav>
-            <Link to="./register" className="text-lg hover:underline mr-5">
-              Register
-            </Link>
-            <Link to="./login" className="text-lg hover:underline">
-              Login
-            </Link>
+            <button className="text-lg hover:underline mr-5" onClick={logout}>
+              Logout
+            </button>
           </nav>
         </div>
       </header>
