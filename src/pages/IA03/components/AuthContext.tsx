@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Props from '../interface/Props';
 
 const API = import.meta.env.DEV ? import.meta.env.VITE_REACT_APP_API_LOCAL : import.meta.env.VITE_REACT_APP_API;
@@ -11,6 +11,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
+	const location = useLocation();
 
   // Check authentication status when the app loads
   useEffect(() => {
@@ -38,7 +39,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       }
     };
 
-    checkAuth();
+    if (location.pathname !== '/user-registration/register') checkAuth();
   }, [navigate]);
 
   return (
