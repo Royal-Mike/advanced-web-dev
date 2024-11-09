@@ -40,6 +40,7 @@ const Layout: React.FC<Props> = ({ children }) => {
       });
 
       if (response.ok) {
+        localStorage.removeItem('access_token');
         navigate('./login');
       }
       else {
