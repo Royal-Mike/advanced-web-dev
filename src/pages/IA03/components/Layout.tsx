@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const API = import.meta.env.DEV ? import.meta.env.VITE_REACT_APP_API_LOCAL : import.meta.env.VITE_REACT_APP_API;
@@ -8,13 +8,35 @@ interface Props {
 }
 
 const Layout: React.FC<Props> = ({ children }) => {
+  const [login, setLogin] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch(`${API}/user/home`, {
+          method: 'GET',
+          headers: { 'Authorization': 'Bearer ' + localStorage.getItem('access_token') }
+          // credentials: 'include',
+        });
+
+        if (response.ok) {
+          setLogin(true);
+        }
+      } catch (error) {
+        console.error('Authentication check failed', error);
+        navigate('./login');
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
 
   async function logout() {
     try {
       const response = await fetch(`${API}/user/logout`, {
         method: 'POST',
-        credentials: 'include', // Allows cookies to be sent with the request
+        // credentials: 'include',
       });
 
       if (response.ok) {
@@ -37,9 +59,20 @@ const Layout: React.FC<Props> = ({ children }) => {
             <Link to="./">21127561 - User Registration</Link>
           </h1>
           <nav>
-            <button className="text-lg hover:underline mr-5" onClick={logout}>
-              Logout
+            {!login
+            ?
+            <button className="text-lg hover:underline mr-5" onClick={() => navigate('./login')}>
+              Login
             </button>
+            :
+            <>
+              <button className="text-lg hover:underline mr-5" onClick={() => navigate('./profile')}>
+                Profile
+              </button>
+              <button className="text-lg hover:underline mr-5" onClick={logout}>
+                Logout
+              </button>
+            </>}
           </nav>
         </div>
       </header>

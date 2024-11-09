@@ -22,11 +22,13 @@ function Login() {
       const response = await fetch(`${API}/user/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // Allows cookies to be sent with the request
+        // credentials: 'include',
         body: JSON.stringify(data),
       });
 
       if (response.ok) {
+				const data = await response.json();
+				localStorage.setItem('access_token', data.access_token);
         navigate('../');
       }
       else {
