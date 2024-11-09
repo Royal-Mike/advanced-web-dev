@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext';
 
 const API = import.meta.env.DEV ? import.meta.env.VITE_REACT_APP_API_LOCAL : import.meta.env.VITE_REACT_APP_API;
 
@@ -8,29 +9,8 @@ interface Props {
 }
 
 const Layout: React.FC<Props> = ({ children }) => {
-  const [login, setLogin] = useState(false);
+  const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await fetch(`${API}/user/home`, {
-          method: 'GET',
-          headers: { 'Authorization': 'Bearer ' + localStorage.getItem('access_token') }
-          // credentials: 'include',
-        });
-
-        if (response.ok) {
-          setLogin(true);
-        }
-      } catch (error) {
-        console.error('Authentication check failed', error);
-        navigate('/user-registration/login');
-      }
-    };
-
-    checkAuth();
-  }, [navigate]);
 
   async function logout() {
     try {
@@ -60,7 +40,7 @@ const Layout: React.FC<Props> = ({ children }) => {
             <Link to="./">21127561 - User Registration</Link>
           </h1>
           <nav>
-            {!login
+            {!isAuthenticated
             ?
             <button className="text-lg hover:underline mr-5" onClick={() => navigate('/user-registration/login')}>
               Login

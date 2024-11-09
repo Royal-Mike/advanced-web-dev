@@ -3,6 +3,7 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 
 import Layout from './components/Layout';
 import FormLayout from './components/FormLayout';
+import { AuthProvider } from './components/AuthContext';
 
 import Home from './components/Home';
 import Login from './components/Login';
@@ -11,7 +12,7 @@ import Profile from './components/Profile';
 
 export default function User() {
   return (
-    <>
+    <AuthProvider>
       <Routes>
         <Route path="/" element={
           <Layout>
@@ -35,6 +36,6 @@ export default function User() {
         } />
       </Routes>
       <Outlet />
-    </>
+    </AuthProvider>
   );
 }
