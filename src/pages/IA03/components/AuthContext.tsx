@@ -1,11 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Props from '../interface/Props';
 
 const API = import.meta.env.DEV ? import.meta.env.VITE_REACT_APP_API_LOCAL : import.meta.env.VITE_REACT_APP_API;
-
-interface Props {
-  children: React.ReactNode;
-}
 
 export const AuthContext = createContext({ isAuthenticated: false, username: '', email: '' });
 

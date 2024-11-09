@@ -1,8 +1,5 @@
 import React from 'react';
-
-interface Props {
-  children: React.ReactNode;
-}
+import Props from '../interface/Props';
 
 const Layout: React.FC<Props> = ({ children }) => {
   return (

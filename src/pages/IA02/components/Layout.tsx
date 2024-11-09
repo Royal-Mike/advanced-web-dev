@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface Props {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const Layout: React.FC<Props> = ({ children }) => {

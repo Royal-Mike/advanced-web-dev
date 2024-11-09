@@ -1,12 +1,9 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
+import Props from '../interface/Props';
 
 const API = import.meta.env.DEV ? import.meta.env.VITE_REACT_APP_API_LOCAL : import.meta.env.VITE_REACT_APP_API;
-
-interface Props {
-  children: React.ReactNode;
-}
 
 const Layout: React.FC<Props> = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);
