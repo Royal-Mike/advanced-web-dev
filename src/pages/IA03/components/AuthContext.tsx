@@ -4,7 +4,7 @@ import Props from '../interface/Props';
 
 const API = import.meta.env.DEV ? import.meta.env.VITE_REACT_APP_API_LOCAL : import.meta.env.VITE_REACT_APP_API;
 
-export const AuthContext = createContext({ isAuthenticated: false, username: '', email: '' });
+export const AuthContext = createContext({ isAuthenticated: false, username: '', email: '', logout: async () => {} });
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -42,8 +42,27 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     if (location.pathname !== '/user-registration/register') checkAuth();
   }, [navigate]);
 
+  const logout = async () => {
+    try {
+      const response = await fetch(`${API}/user/logout`, {
+        method: 'POST',
+        // credentials: 'include',
+      });
+
+      if (response.ok) {
+        localStorage.removeItem('access_token');
+        navigate('/user-registration/login');
+      }
+      else {
+				console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('An error occurred: ', error);
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, username, email }}>
+    <AuthContext.Provider value={{ isAuthenticated, username, email, logout }}>
       {children}
     </AuthContext.Provider>
   );

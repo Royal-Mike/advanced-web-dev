@@ -3,30 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import Props from '../interface/Props';
 
-const API = import.meta.env.DEV ? import.meta.env.VITE_REACT_APP_API_LOCAL : import.meta.env.VITE_REACT_APP_API;
-
 const Layout: React.FC<Props> = ({ children }) => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  async function logout() {
-    try {
-      const response = await fetch(`${API}/user/logout`, {
-        method: 'POST',
-        // credentials: 'include',
-      });
-
-      if (response.ok) {
-        localStorage.removeItem('access_token');
-        navigate('/user-registration/login');
-      }
-      else {
-				console.error('Logout failed');
-      }
-    } catch (error) {
-      console.error('An error occurred: ', error);
-    }
-  }
 
   return (
     <div className="bg-black min-h-screen flex flex-col">
