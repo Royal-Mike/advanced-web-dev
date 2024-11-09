@@ -5,7 +5,7 @@ import NotFound from './pages/NotFound/app';
 
 import IA01 from './pages/IA01/app';
 import IA02 from './pages/IA02/app';
-import IA03 from './pages/IA03/app';
+import IA03_4 from './pages/IA03+4/app';
 
 export default function App() {
   return (
@@ -14,7 +14,7 @@ export default function App() {
         <Route path='/' element={<Home />} />
         <Route path='/tic-tac-toe' element={<IA01 />} />
         <Route path='/unsplash-gallery/*' element={<IA02 />} />
-        <Route path='/user-registration/*' element={<IA03 />} />
+        <Route path='/user-registration/*' element={<IA03_4 />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </div>

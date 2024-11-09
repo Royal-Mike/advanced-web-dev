@@ -16,7 +16,7 @@ export default function Home() {
         IA02: Unsplash Gallery
       </button>
       <button className="mx-2 px-2 border-2 border-black rounded" onClick={() => routeChange('/user-registration')}>
-        IA03: User Registration API
+        IA03+4: User Registration API + JWT Authentication
       </button>
     </>
   );

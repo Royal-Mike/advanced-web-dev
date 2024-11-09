@@ -13,7 +13,7 @@ const Layout: React.FC<Props> = ({ children }) => {
       <header className="bg-zinc-900 text-white py-4 shadow-lg">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">
-            <Link to="./">21127561 - User Registration</Link>
+            <Link to="./">21127561 - JWT Authentication</Link>
           </h1>
           <nav>
             {!isAuthenticated
