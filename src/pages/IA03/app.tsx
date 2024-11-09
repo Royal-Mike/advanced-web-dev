@@ -7,6 +7,7 @@ import FormLayout from './components/FormLayout';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
+import Profile from './components/Profile';
 
 export default function User() {
   return (
@@ -26,6 +27,11 @@ export default function User() {
           <FormLayout>
             <Register />
           </FormLayout>
+        } />
+        <Route path="/profile" element={
+          <Layout>
+            <Profile />
+          </Layout>
         } />
       </Routes>
       <Outlet />

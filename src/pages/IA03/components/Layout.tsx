@@ -25,7 +25,7 @@ const Layout: React.FC<Props> = ({ children }) => {
         }
       } catch (error) {
         console.error('Authentication check failed', error);
-        navigate('./login');
+        navigate('/user-registration/login');
       }
     };
 
@@ -41,7 +41,7 @@ const Layout: React.FC<Props> = ({ children }) => {
 
       if (response.ok) {
         localStorage.removeItem('access_token');
-        navigate('./login');
+        navigate('/user-registration/login');
       }
       else {
 				console.error('Logout failed');
@@ -62,12 +62,12 @@ const Layout: React.FC<Props> = ({ children }) => {
           <nav>
             {!login
             ?
-            <button className="text-lg hover:underline mr-5" onClick={() => navigate('./login')}>
+            <button className="text-lg hover:underline mr-5" onClick={() => navigate('/user-registration/login')}>
               Login
             </button>
             :
             <>
-              <button className="text-lg hover:underline mr-5" onClick={() => navigate('./profile')}>
+              <button className="text-lg hover:underline mr-5" onClick={() => navigate('/user-registration/profile')}>
                 Profile
               </button>
               <button className="text-lg hover:underline mr-5" onClick={logout}>
