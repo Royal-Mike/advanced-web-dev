@@ -42,6 +42,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     if (location.pathname !== '/user-registration/register') checkAuth();
   }, [navigate]);
 
+	// Logout function to clear authentication state
   const logout = async () => {
     try {
       const response = await fetch(`${API}/user/logout`, {
